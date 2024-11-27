@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useAppProvider from "../provider/hook";
-import UserRow from "./userRow";
+import UserRow from "../components/userRow";
 import { BsSortAlphaDown, BsSortAlphaDownAlt } from "react-icons/bs";
 import { LiaRandomSolid } from "react-icons/lia";
 import { IUser } from "../types/user";

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import RolesRow from "./RolesRow";
+import RolesRow from "../components/RolesRow";
 import useAppProvider from "../provider/hook";
 
 export default function Roles() {

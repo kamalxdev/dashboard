@@ -1,10 +1,10 @@
 import "./App.css";
 import Header from "./components/header";
-import Users from "./components/user";
+import Users from "./pages/user";
 import { GrGroup } from "react-icons/gr";
 import { LuFilter } from "react-icons/lu";
 import { FiUser, FiUserPlus } from "react-icons/fi";
-import Roles from "./components/roles";
+import Roles from "./pages/roles";
 import FilterDialogBox from "./components/filterDialogBox";
 import useAppProvider from "./provider/hook";
 import {NavLink, Route, Routes } from "react-router";
