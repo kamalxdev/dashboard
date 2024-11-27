@@ -1,6 +1,5 @@
 import { memo } from "react";
 import { FaXmark } from "react-icons/fa6";
-import roles from "../data/roles.json";
 import useAppProvider from "../provider/hook";
 
 function FilterDialogBox() {
@@ -71,7 +70,7 @@ const FilterForUser = memo(function FilterForUser() {
       <span className=" relative flex flex-col gap-2">
         <h3 className="font-semibold">Roles</h3>
         <span className="flex gap-2 flex-wrap">
-          {roles?.map((r) => (
+          {uAppProvider?.roles?.map((r) => (
             <button
               key={r?.name}
               onClick={() => handlOnRoleClick(r?.name)}

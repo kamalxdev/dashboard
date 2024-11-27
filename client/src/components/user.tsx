@@ -3,7 +3,6 @@ import useAppProvider from "../provider/hook";
 import UserRow from "./userRow";
 import { BsSortAlphaDown, BsSortAlphaDownAlt } from "react-icons/bs";
 import { LiaRandomSolid } from "react-icons/lia";
-import axios from "axios";
 import { IUser } from "../types/user";
 
 export default function Users() {
@@ -40,17 +39,9 @@ export default function Users() {
 
   useEffect(() => {
     uAppProvider?.setToggleMenu("user");
-    if(uAppProvider?.users.length == 0){
-      axios
-      .get(`${import.meta.env.VITE_SERVER_API_URl}/user`)
-      .then((data) => {
-        uAppProvider?.setUsers(data?.data?.user)
-        filteredAndSortedUsers?.length == 0 && setFilteredAndSortedUsers(data?.data?.user)
-      })
-      .catch((err) => {
-        console.log("Error on geting users : ", err);
-        
-      });
+      setFilteredAndSortedUsers(uAppProvider?.users)
+    return ()=>{
+      uAppProvider?.setPriorityfnRunning(false)
     }
   }, [uAppProvider?.users]);
 
@@ -86,6 +77,7 @@ export default function Users() {
             <tr className="bg-white text-black rounded-md ">
               <th className="p-2 ">
                 <button
+                disabled={uAppProvider?.priorityfnRunning}
                   className="flex items-center gap-1 transition-all p-1 border border-white rounded-sm hover:border-zinc-300"
                   onClick={()=>handleSortUser("name")}
                 >
@@ -104,6 +96,7 @@ export default function Users() {
               <th className="hidden md:table-cell">Email</th>
               <th className=" ">
                 <button
+                disabled={uAppProvider?.priorityfnRunning}
                   className="flex items-center gap-1 transition-all p-1 border border-white rounded-sm hover:border-zinc-300"
                   onClick={()=>handleSortUser("role")}
                 >

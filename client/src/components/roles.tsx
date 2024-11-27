@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import RolesRow from "./RolesRow";
 import useAppProvider from "../provider/hook";
-import axios from "axios";
 
 export default function Roles() {
   const uAppProvider = useAppProvider();
@@ -23,16 +22,8 @@ export default function Roles() {
 
   useEffect(() => {
     uAppProvider?.setToggleMenu("role");
-    if(uAppProvider?.roles.length == 0){
-      axios
-      .get(`${import.meta.env.VITE_SERVER_API_URl}/role`)
-      .then((data) => {
-        uAppProvider?.setRoles(data?.data?.role)
-      })
-      .catch((err) => {
-        console.log("Error on geting roles : ", err);
-        
-      });
+    return ()=>{
+      uAppProvider?.setPriorityfnRunning(false)
     }
   }, [uAppProvider?.roles]);
 

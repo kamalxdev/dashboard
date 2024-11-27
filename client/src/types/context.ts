@@ -16,6 +16,8 @@ export interface IAppProvider {
   setToggleMenu: (x: IToggleMenu) => void;
   toggleFilter: boolean;
   setToggleFilter: (x: boolean) => void;
+  toggleAddNew: boolean;
+  setToggleAddNew: (x: boolean) => void;
   filterUsers: IFilterUsers;
   setFilterUsers: (x: IFilterUsers) => void;
   filterRoles: IFilterRoles;
@@ -24,4 +26,6 @@ export interface IAppProvider {
   setRoles: (x: IRoles[]) => void;
   users: IUser[];
   setUsers: (x: IUser[]) => void;
+  priorityfnRunning: boolean;
+  setPriorityfnRunning: (x: boolean) => void;
 }
