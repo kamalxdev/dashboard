@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import users from "../data/users.json";
 import useAppProvider from "../provider/hook";
 import UserRow from "./userRow";
 import { BsSortAlphaDown, BsSortAlphaDownAlt } from "react-icons/bs";
-import { IUser } from "../types/user";
 import { LiaRandomSolid } from "react-icons/lia";
+import axios from "axios";
+import { IUser } from "../types/user";
 
 export default function Users() {
   const uAppProvider = useAppProvider();
@@ -13,60 +13,49 @@ export default function Users() {
     role: "random",
   });
 
-  const [filteredAndSortedUsers, setFilteredAndSortedUsers] = useState<IUser[]>(
-    []
-  );
+  const [filteredAndSortedUsers,setFilteredAndSortedUsers]= useState<IUser[]>(uAppProvider?.users)
 
-  function handleSortName() {
-    if (sort?.name == "descending" || sort?.name == "random") {
-      setSort({ role: "random", name: "ascending" });
+
+  function handleSortUser(toSort:"name"|"role") {
+    if (sort?.[toSort] == "descending" || sort?.[toSort] == "random") {
+      setSort({ ...sort, [toSort == "name" ? "role":"name"]: "random", [toSort]: "ascending" });
       setFilteredAndSortedUsers(
-        [...filteredAndSortedUsers]?.sort((a, b) =>
-          a?.name.localeCompare(b?.name, undefined, { sensitivity: "base" })
+        filteredAndSortedUsers?.sort((a, b) =>
+          a?.[toSort].localeCompare(b?.[toSort], undefined, { sensitivity: "base" })
         )
       );
-    } else if (sort?.name == "ascending") {
-      setSort({ role: "random", name: "descending" });
+    } else if (sort?.[toSort] == "ascending") {
+      setSort({ ...sort, [toSort == "name" ? "role":"name"]: "random", [toSort]: "descending" });
       setFilteredAndSortedUsers(
-        [...filteredAndSortedUsers]
-          ?.sort((a, b) =>
-            a?.name.localeCompare(b?.name, undefined, { sensitivity: "base" })
+        filteredAndSortedUsers?.sort((a, b) =>
+            a?.[toSort].localeCompare(b?.[toSort], undefined, { sensitivity: "base" })
           )
           .reverse()
       );
     } else {
-      setSort({ ...sort, name: "random" });
+      setSort({ ...sort, [toSort]: "random" });
     }
   }
 
-  function handleSortRole() {
-    if (sort?.role == "descending" || sort?.role == "random") {
-      setSort({ name: "random", role: "ascending" });
-      setFilteredAndSortedUsers(
-        [...filteredAndSortedUsers]?.sort((a, b) =>
-          a?.role.localeCompare(b?.role, undefined, { sensitivity: "base" })
-        )
-      );
-    } else if (sort?.role == "ascending") {
-      setSort({ name: "random", role: "descending" });
-      setFilteredAndSortedUsers(
-        [...filteredAndSortedUsers]
-          ?.sort((a, b) =>
-            a?.role.localeCompare(b?.role, undefined, { sensitivity: "base" })
-          )
-          .reverse()
-      );
-    } else {
-      setSort({ ...sort, name: "random" });
-    }
-  }
 
   useEffect(() => {
     uAppProvider?.setToggleMenu("user");
-  }, []);
+    if(uAppProvider?.users.length == 0){
+      axios
+      .get(`${import.meta.env.VITE_SERVER_API_URl}/user`)
+      .then((data) => {
+        uAppProvider?.setUsers(data?.data?.user)
+        filteredAndSortedUsers?.length == 0 && setFilteredAndSortedUsers(data?.data?.user)
+      })
+      .catch((err) => {
+        console.log("Error on geting users : ", err);
+        
+      });
+    }
+  }, [uAppProvider?.users]);
 
   useEffect(() => {
-    const filteredUsers = users.filter((u) => {
+    const filteredUsers = uAppProvider?.users?.filter((u) => {
       const userFilter = uAppProvider?.filterUsers;
       const userFilterRoles = userFilter?.roles;
       const userFilterStatus = userFilter?.status
@@ -85,7 +74,7 @@ export default function Users() {
     });
 
     if (filteredUsers != filteredAndSortedUsers) {
-      setFilteredAndSortedUsers(filteredUsers);
+      setFilteredAndSortedUsers(filteredUsers)
     }
   }, [uAppProvider?.filterUsers]);
 
@@ -98,7 +87,7 @@ export default function Users() {
               <th className="p-2 ">
                 <button
                   className="flex items-center gap-1 transition-all p-1 border border-white rounded-sm hover:border-zinc-300"
-                  onClick={handleSortName}
+                  onClick={()=>handleSortUser("name")}
                 >
                   <p className=" md:hidden table-cell">User</p>
                   <p className="hidden md:table-cell">Name</p>
@@ -116,7 +105,7 @@ export default function Users() {
               <th className=" ">
                 <button
                   className="flex items-center gap-1 transition-all p-1 border border-white rounded-sm hover:border-zinc-300"
-                  onClick={handleSortRole}
+                  onClick={()=>handleSortUser("role")}
                 >
                   <p>Role</p>
                   {sort?.role == "random" ? (
@@ -135,11 +124,11 @@ export default function Users() {
             {filteredAndSortedUsers?.map((u, index) => (
               <UserRow
                 name={u?.name}
-                id={u?.id}
+                _id={u?._id}
                 email={u?.email}
                 role={u?.role}
                 status={u?.status}
-                key={u?.id}
+                key={u?._id}
                 index={index}
               />
             ))}

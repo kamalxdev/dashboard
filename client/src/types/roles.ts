@@ -1,5 +1,5 @@
 export interface IRoles {
-    id: Number,
-    name : String,
-    permissions: String[]
+    _id: string,
+    name : string,
+    permissions: string[]
 }

@@ -1,30 +1,40 @@
 import { useEffect } from "react";
-import roles from "../data/roles.json";
 import RolesRow from "./RolesRow";
 import useAppProvider from "../provider/hook";
+import axios from "axios";
 
 export default function Roles() {
   const uAppProvider = useAppProvider();
 
-  const filteredAndSortedRoles = roles.filter((r) => {
-    const rolePermission = uAppProvider?.filterRoles?.permission
-    let hasAllPermission = true
-    
-    rolePermission?.forEach((p)=>{
-      if(!r?.permissions.includes(p)){
-        return hasAllPermission=false
+  const filteredAndSortedRoles = uAppProvider?.roles?.filter((r) => {
+    const rolePermission = uAppProvider?.filterRoles?.permission;
+    let hasAllPermission = true;
+
+    rolePermission?.forEach((p) => {
+      if (!r?.permissions.includes(p)) {
+        return (hasAllPermission = false);
       }
-    })
-    
-    if(hasAllPermission) {
-      return r
+    });
+
+    if (hasAllPermission) {
+      return r;
     }
-    
   });
 
   useEffect(() => {
     uAppProvider?.setToggleMenu("role");
-  }, []);
+    if(uAppProvider?.roles.length == 0){
+      axios
+      .get(`${import.meta.env.VITE_SERVER_API_URl}/role`)
+      .then((data) => {
+        uAppProvider?.setRoles(data?.data?.role)
+      })
+      .catch((err) => {
+        console.log("Error on geting roles : ", err);
+        
+      });
+    }
+  }, [uAppProvider?.roles]);
 
   return (
     <div className=" w-full h-full">
@@ -52,9 +62,9 @@ export default function Roles() {
               <RolesRow
                 name={r?.name}
                 index={index}
-                id={r?.id}
+                _id={r?._id}
                 permissions={r?.permissions}
-                key={r?.id}
+                key={r?._id}
               />
             ))}
           </tbody>

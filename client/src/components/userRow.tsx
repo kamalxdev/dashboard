@@ -85,11 +85,11 @@ function UserRow({ name, email, role, status, index }: IUserRowProps) {
       <td className="">
         <div className="w-full h-full">
           {edit ? (
-            <select className="appearance-none row-start-1 col-start-1 bg-transparent w-full outline-none h-full border rounded-sm p-2">
+            <select defaultValue={role} className="appearance-none row-start-1 col-start-1 bg-transparent w-full outline-none h-full border rounded-sm p-2">
               {roles.map((r) => (
                 <option
                   value={r?.name}
-                  selected={r?.name == role}
+                  key={r?.name}
                   className="bg-black"
                 >
                   {r?.name}

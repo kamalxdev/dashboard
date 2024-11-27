@@ -1,5 +1,7 @@
 import { createContext, useState } from "react";
-import { IAppProvider, IFilterRoles, IFilterUsers, IToggleMenu } from "./types/context";
+import { IAppProvider, IFilterRoles, IFilterUsers, IToggleMenu } from "../types/context";
+import { IRoles } from "../types/roles";
+import { IUser } from "../types/user";
 
 export const AppContext = createContext<IAppProvider | {}>({});
 
@@ -8,6 +10,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [filterUsers, setFilterUsers] = useState<IFilterUsers>({roles:[],status:null});
   const [filterRoles, setFilterRoles] = useState<IFilterRoles>({permission:[]});
   const [toggleMenu, setToggleMenu] = useState<IToggleMenu>("user");
+  const [roles,setRoles] = useState<IRoles[]>([])
+  const [users,setUsers] = useState<IUser[]>([])
+
 
 
   return (
@@ -20,7 +25,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         filterRoles,
         setFilterRoles,
         toggleMenu,
-        setToggleMenu
+        setToggleMenu,
+        roles,
+        setRoles,
+        users,
+        setUsers
       }}
     >
       {children}
