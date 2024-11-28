@@ -13,11 +13,15 @@ It a real-world RBAC system which can also extended to integrate with production
 1. **User Management**  
    - View and manage a list of users.  
    - Add, edit, and delete users.  
-   - Assign roles to users and update their status (e.g., Active/Inactive).  
+   - Assign roles to users and update their status (e.g., Active/Inactive). 
+   - **Filter and sort users** by name, role, or status for quick navigation.
+ 
 
 2. **Role Management**  
    - Create, edit, and delete roles.  
    - Assign permissions (e.g., Read, Write, Delete) to roles.
+   - **Filter roles** by permissions for efficient management.
+
 
 3. **Permission Management**  
    - View and modify permissions assigned to roles.  
@@ -40,6 +44,9 @@ It a real-world RBAC system which can also extended to integrate with production
 ![Mobile View](/public/assets/mobile.png)
 
 ---
+
+### How to use
+![Watch this video](/public/assets/how-to-use.webm)
 
 ## Setup Instructions
 
@@ -77,6 +84,7 @@ Follow these steps to set up and run the project locally:
    ```bash
    npm run dev
    ```
+---
 
 ### Deployment
 
