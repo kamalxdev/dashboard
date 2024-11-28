@@ -46,7 +46,7 @@ It a real-world RBAC system which can also extended to integrate with production
 ---
 
 ### How to use
-![Watch this video](/public/assets/how-to-use.webm)
+![Watch this video](/public/assets/how-to-use.mp4)
 
 ## Setup Instructions
 
