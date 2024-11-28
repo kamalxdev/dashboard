@@ -46,7 +46,10 @@ It a real-world RBAC system which can also extended to integrate with production
 ---
 
 ### How to use
-![Watch this video](/public/assets/how-to-use.mp4)
+
+https://github.com/user-attachments/assets/5308be94-5fa8-4baf-a7f2-ab2791be96de
+
+---
 
 ## Setup Instructions
 
