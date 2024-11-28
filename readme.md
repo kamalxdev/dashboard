@@ -34,10 +34,10 @@ It a real-world RBAC system which can also extended to integrate with production
 ## Screenshots
 
 ### Desktop View
-![Desktop View](./assets/desktop.png)
+![Desktop View](/public/assets/desktop.png)
 
 ### Mobile View
-![Mobile View](./assets/mobile.png)
+![Mobile View](/public/assets/mobile.png)
 
 ---
 
